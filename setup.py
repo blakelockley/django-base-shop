@@ -1,0 +1,23 @@
+import setuptools
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+    name="django-base-shop",
+    version="0.0.1",
+    author="Blake Lockley",
+    author_email="bwlockley@gmail.com",
+    description="A basic, extendable data model for ecommerce shops using Django",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/blakelockley/django-base-shop",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+    ],
+    python_requires='>=3.6',
+)
+
