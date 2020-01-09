@@ -21,5 +21,5 @@ setuptools.setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    python_requires="=>3.7",
+    python_requires=">=3.6.5",
 )

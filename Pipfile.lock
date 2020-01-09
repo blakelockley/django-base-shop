@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0f9c0fed45970b7963f584cc4f28b66828a7b6253a11553828671e88cd478714"
+            "sha256": "76c5798ce0800c979cacbea92a3b624a53ddb3316d9a2767898635df26677877"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -67,6 +67,10 @@
             ],
             "index": "pypi",
             "version": "==3.0.2"
+        },
+        "django-base-shop": {
+            "editable": true,
+            "path": "."
         },
         "importlib-metadata": {
             "hashes": [
