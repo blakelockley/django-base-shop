@@ -5,11 +5,11 @@ from django.db import models
 from django.apps import apps
 
 from django.conf import settings
-from ..concrete.cart import Cart
+from ..abstract.base_cart import BaseCart
 
 
 class OrderManager(models.Manager):
-    def create_from_cart(self, cart: Cart):
+    def create_from_cart(self, cart: BaseCart):
 
         if cart.checkout_details.shipping_option is None:
             raise ValueError(

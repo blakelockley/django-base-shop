@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class BaseShopConfig(AppConfig):
-    name = "baseshop"
+class DjangoBaseShopConfig(AppConfig):
+    name = "django_base_shop"

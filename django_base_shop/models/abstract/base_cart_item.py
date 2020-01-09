@@ -3,8 +3,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 
-class CartItem(models.Model):
-    cart = models.ForeignKey("Cart", related_name="items", on_delete=models.CASCADE)
+class BaseCartItem(models.Model):
+    class Meta:
+        abstract = True
+
+    cart = models.ForeignKey(
+        settings.SHOP_CART_MODEL, related_name="items", on_delete=models.CASCADE
+    )
 
     quantity = models.PositiveIntegerField(default=1)
     product = models.ForeignKey(settings.SHOP_PRODUCT_MODEL, on_delete=models.PROTECT)

@@ -3,12 +3,14 @@ from secrets import token_hex
 
 from django.conf import settings
 from django.db import models
+from django.apps import apps
 
-from .cart_item import CartItem
+from .base_cart_item import BaseCartItem
 
 
-class Cart(models.Model):
+class BaseCart(models.Model):
     class Meta:
+        abstract = True
         indexes = (models.Index(fields=["cart_token"]),)
 
     # Used as a handle to retrieve the users cart from cookies or other
@@ -38,6 +40,7 @@ class Cart(models.Model):
         return total
 
     def update_or_add_item(self, product, quantity=1):
+        CartItem = apps.get_model(settings.SHOP_CART_ITEM_MODEL)
         item, _ = CartItem.objects.get_or_create(  # pylint: disable=no-member
             cart=self, product=product
         )
@@ -45,6 +48,7 @@ class Cart(models.Model):
         item.save()
 
     def remove_item(self, product):
+        CartItem = apps.get_model(settings.SHOP_CART_ITEM_MODEL)
         CartItem.objects.filter(  # pylint: disable=no-member
             cart=self, product=product
         ).delete()

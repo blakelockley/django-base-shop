@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-from .cart_item import CartItem
-
 
 class OrderItemManager(models.Manager):
     def create_from_cart_item(self, item, *, order: settings.SHOP_ORDER_MODEL):
@@ -14,7 +12,10 @@ class OrderItemManager(models.Manager):
         )
 
 
-class OrderItem(models.Model):
+class BaseOrderItem(models.Model):
+    class Meta:
+        abstract = True
+
     objects = OrderItemManager()
 
     order = models.ForeignKey(
