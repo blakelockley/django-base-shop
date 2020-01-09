@@ -69,5 +69,8 @@ WSGI_APPLICATION = "test_project.wsgi.application"
 
 # Shop Models
 SHOP_PRODUCT_MODEL = "test_shop.TestProduct"
+SHOP_ORDER_ITEM_MODEL = "test_shop.TestOrderItem"
 SHOP_ORDER_MODEL = "test_shop.TestOrder"
+SHOP_CART_ITEM_MODEL = "test_shop.TestCartItem"
+SHOP_CART_MODEL = "test_shop.TestCart"
 SHOP_CHECKOUT_DETAILS_MODEL = "test_shop.TestCheckoutDetails"
