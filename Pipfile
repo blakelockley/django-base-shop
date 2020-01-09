@@ -4,10 +4,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pylint = "*"
-pytest = "*"
-django = "*"
 black = "*"
+mypy = "*"
+django = "*"
+pytest = "*"
+pytest-django = "*"
 django-base-shop = {editable = true,path = "."}
 
 [packages]
