@@ -5,8 +5,6 @@ from django.conf import settings
 from django.db import models
 from django.apps import apps
 
-from .base_cart_item import BaseCartItem
-
 
 class BaseCart(models.Model):
     class Meta:
@@ -26,7 +24,10 @@ class BaseCart(models.Model):
     )
 
     def __str__(self):
-        return f"Cart ({self.cart_token})"
+        return f"Cart ({self.cart_token[:8]})"
+
+    def __len__(self):
+        return self.items.count()  # pylint: disable=no-member
 
     @property
     def empty(self):
@@ -39,16 +40,30 @@ class BaseCart(models.Model):
             total += item.product.price * item.quantity
         return total
 
-    def update_or_add_item(self, product, quantity=1):
+    def add_item(self, product, quantity=1):
+        """
+        Add item to cart. A single quantity will be added unless specified otherwise.
+        """
         CartItem = apps.get_model(settings.SHOP_CART_ITEM_MODEL)
-        item, _ = CartItem.objects.get_or_create(  # pylint: disable=no-member
-            cart=self, product=product
-        )
-        item.quantity = quantity
-        item.save()
 
-    def remove_item(self, product):
+        item, created = CartItem.objects.get_or_create(
+            cart=self, product=product, defaults={"quantity": quantity}
+        )
+
+        if not created:
+            item.quantity += quantity
+            item.save()
+
+    def remove_item(self, product, quantity=None):
+        """
+        Remove item from cart. If quantity is None, the full quantity of the given item will be removed.
+        """
         CartItem = apps.get_model(settings.SHOP_CART_ITEM_MODEL)
-        CartItem.objects.filter(  # pylint: disable=no-member
-            cart=self, product=product
-        ).delete()
+        item = CartItem.objects.get(cart=self, product=product)
+
+        if quantity is None or quantity == item.quantity:
+            CartItem.objects.filter(pk=item.pk).delete()
+
+        else:
+            item.quantity -= quantity
+            item.save()

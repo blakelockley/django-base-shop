@@ -11,7 +11,7 @@ class BaseCartItem(models.Model):
         settings.SHOP_CART_MODEL, related_name="items", on_delete=models.CASCADE
     )
 
-    quantity = models.PositiveIntegerField(default=1)
+    quantity = models.PositiveIntegerField(default=0)
     product = models.ForeignKey(settings.SHOP_PRODUCT_MODEL, on_delete=models.PROTECT)
 
     def __str__(self):
