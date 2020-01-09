@@ -21,12 +21,32 @@ class BaseCheckoutDetails(models.Model):
     shipping_address = models.ForeignKey(
         Address, related_name="+", on_delete=models.PROTECT
     )
-    billing_address = models.ForeignKey(
+
+    billing_address_same_as_shipping = models.BooleanField(default=True)
+
+    # Private field to be accessed via setter + getter
+    _billing_address = models.ForeignKey(
         Address, null=True, related_name="+", on_delete=models.PROTECT
     )
-    billing_same_as_shipping = models.BooleanField(default=True)
 
     shipping_option = models.ForeignKey(
         ShippingOption, null=True, on_delete=models.PROTECT
     )
 
+    @property
+    def billing_address(self):
+        """
+        Return shipping or billing address based on billing_address_same_as_shipping flag.
+        """
+
+        if self.billing_address_same_as_shipping:
+            return self.shipping_address
+
+        return self._billing_address
+
+    @billing_address.setter
+    def billing_address(self, address):
+        self.billing_address_same_as_shipping = False
+        self._billing_address = address
+
+        self.save()
