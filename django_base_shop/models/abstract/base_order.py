@@ -4,8 +4,8 @@ from secrets import token_hex
 from django.db import models
 from django.apps import apps
 
-from .cart import Cart
-from .checkout_details import CheckoutDetails
+from django.conf import settings
+from ..concrete.cart import Cart
 
 
 class OrderManager(models.Manager):
@@ -31,8 +31,9 @@ class OrderManager(models.Manager):
         return order
 
 
-class Order(models.Model):
+class BaseOrder(models.Model):
     class Meta:
+        abstract = True
         indexes = (models.Index(fields=["order_token"]),)
 
     objects = OrderManager()
@@ -45,7 +46,7 @@ class Order(models.Model):
 
     # TODO: Make the values of the related object inmutable once set
     checkout_details = models.ForeignKey(
-        CheckoutDetails, related_name="+", on_delete=models.PROTECT
+        settings.SHOP_CHECKOUT_DETAILS_MODEL, related_name="+", on_delete=models.PROTECT
     )
 
     # Snapshot price information

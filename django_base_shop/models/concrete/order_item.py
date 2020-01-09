@@ -1,12 +1,11 @@
+from django.conf import settings
 from django.db import models
 
-from .product import Product
-from .order import Order
 from .cart_item import CartItem
 
 
 class OrderItemManager(models.Manager):
-    def create_from_cart_item(self, item, *, order: Order):
+    def create_from_cart_item(self, item, *, order: settings.SHOP_ORDER_MODEL):
         return self.create(
             order=order,
             product=item.product,
@@ -18,8 +17,10 @@ class OrderItemManager(models.Manager):
 class OrderItem(models.Model):
     objects = OrderItemManager()
 
-    order = models.ForeignKey(Order, related_name="items", on_delete=models.PROTECT)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    order = models.ForeignKey(
+        settings.SHOP_ORDER_MODEL, related_name="items", on_delete=models.PROTECT
+    )
+    product = models.ForeignKey(settings.SHOP_PRODUCT_MODEL, on_delete=models.PROTECT)
 
     quantity = models.PositiveIntegerField(default=0)
 
