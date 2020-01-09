@@ -10,25 +10,25 @@ from django_base_shop.models import (
 )
 
 
-class TestProduct(BaseProduct):
+class ConcreteProduct(BaseProduct):
     pass
 
 
-class TestOrderItem(BaseOrderItem):
+class ConcreteOrderItem(BaseOrderItem):
     pass
 
 
-class TestOrder(BaseOrder):
+class ConcreteOrder(BaseOrder):
     pass
 
 
-class TestCheckoutDetails(BaseCheckoutDetails):
+class ConcreteCheckoutDetails(BaseCheckoutDetails):
     pass
 
 
-class TestCartItem(BaseCartItem):
+class ConcreteCartItem(BaseCartItem):
     pass
 
 
-class TestCart(BaseCart):
+class ConcreteCart(BaseCart):
     pass

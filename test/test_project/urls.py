@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from test_shop import views
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path("", views.index, name="index"),
+    path("create_cart", views.create_cart, name="create_cart"),
+    path("check_cart", views.check_cart, name="check_cart"),
 ]
