@@ -25,7 +25,7 @@ class BaseCartItem(models.Model):
         super().clean()
 
         if self.quantity <= 0:
-            raise ValidationError("Quantity of CartItem must be nonzero.")
+            raise ValidationError("Quantity of CartItem must be greater than zero.")
 
     def save(self, *args, **kwargs):
         self.full_clean()

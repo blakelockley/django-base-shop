@@ -55,6 +55,12 @@ class BaseOrder(models.Model):
     subtotal_paid = models.DecimalField(max_digits=7, decimal_places=2)
     shipping_paid = models.DecimalField(max_digits=7, decimal_places=2)
 
+    def __len__(self):
+        return self.items.count()
+
+    def __str__(self):
+        return f"Order ({self.checkout_details.customer_name})"
+
     @property
     def total_paid(self):
         return self.subtotal_paid + self.shipping_paid

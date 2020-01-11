@@ -31,3 +31,13 @@ class BaseOrderItem(models.Model):
     @property
     def combined_price(self):
         return self.price_paid * self.quantity
+
+    def clean(self, *args, **kwargs):
+        super().clean()
+
+        if self.quantity <= 0:
+            raise ValidationError("Quantity of OrderItem must be greater than zero.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save()

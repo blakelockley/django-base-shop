@@ -1,9 +1,6 @@
 from django.db import models
 from ..concrete.image import Image
 
-# TODO: ...
-# from images.models import Image
-
 
 class BaseProduct(models.Model):
     class Meta:
@@ -27,13 +24,6 @@ class BaseProduct(models.Model):
     # Pricing
     price = models.DecimalField(max_digits=7, decimal_places=2)
 
-    # TODO: Abstract
-    # shipping_size = models.CharField(
-    #     max_length=1,
-    #     choices=ShippingOption.SIZE_CHOICES,
-    #     default=ShippingOption.MEDIUM,
-    # )
-
     # Availablity
     available = models.BooleanField(default=True)
     back_in_stock = models.DateField(null=True, blank=True)
@@ -48,5 +38,4 @@ class BaseProduct(models.Model):
 
     @property
     def first_image(self):
-        pass
-        # return self.images.all().first()
+        return self.images.all().first()
