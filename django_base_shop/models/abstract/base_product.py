@@ -1,4 +1,5 @@
 from django.db import models
+from ..concrete.image import Image
 
 # TODO: ...
 # from images.models import Image
@@ -20,8 +21,8 @@ class BaseProduct(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
 
-    # TODO: Implement with FK model;
-    # images = models.ManyToManyField(Image)
+    # Product images
+    images = models.ManyToManyField(Image)
 
     # Pricing
     price = models.DecimalField(max_digits=7, decimal_places=2)
