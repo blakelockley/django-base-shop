@@ -10,11 +10,10 @@ class CartMiddleware:
 
     def __call__(self, request):
 
-        # Before view
+        # Request
         cart_token = request.COOKIES.get("cart_token")
         if cart_token:
             request.cart = Cart.objects.filter(cart_token=cart_token).first()
-
         else:
             request.cart = None
 
