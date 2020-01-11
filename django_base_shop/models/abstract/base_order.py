@@ -1,17 +1,18 @@
+from decimal import Decimal
 from functools import partial
 from secrets import token_hex
 
 from django.db import models
+from django.conf import settings
 from django.apps import apps
 
-from django.conf import settings
 from ..abstract.base_cart import BaseCart
 
 
 class OrderManager(models.Manager):
     def create_from_cart(self, cart: BaseCart):
 
-        if cart.checkout_details.shipping_option is None:
+        if cart.checkout_details.shipping_selection is None:
             raise ValueError(
                 "Cart must contain a shipping option when creating an Order."
             )
@@ -19,11 +20,11 @@ class OrderManager(models.Manager):
         # TODO: Atomic transaction and destory cart
         order = self.create(
             checkout_details=cart.checkout_details,
-            shipping_paid=cart.checkout_details.shipping_option.price,
+            shipping_paid=cart.checkout_details.shipping_selection.price,
             subtotal_paid=cart.subtotal,
         )
 
-        OrderItem = apps.get_model("shop", "OrderItem")
+        OrderItem = apps.get_model(settings.SHOP_ORDER_ITEM_MODEL)
 
         for item in cart.items.all():
             OrderItem.objects.create_from_cart_item(item, order=order)
