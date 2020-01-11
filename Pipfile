@@ -12,6 +12,7 @@ pytest-django = "*"
 django-base-shop = {editable = true,path = "."}
 
 [packages]
+pillow = "*"
 
 [requires]
 python_version = "3.7"
