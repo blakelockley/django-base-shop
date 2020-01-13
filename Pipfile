@@ -10,6 +10,7 @@ django = "*"
 pytest = "*"
 pytest-django = "*"
 django-base-shop = {editable = true,path = "."}
+twine = "*"
 
 [packages]
 pillow = "*"

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="django-base-shop",
-    version="0.0.1",
+    version="0.0.2",
     author="Blake Lockley",
     author_email="bwlockley@gmail.com",
     description="A basic, extendable data model for ecommerce shops using Django",
@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/blakelockley/django-base-shop",
     packages=setuptools.find_packages(exclude=["test"]),
-    install_requires=["django >= 2.1"],
+    install_requires=["django >= 2.1", "pillow == 7.0.0"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
