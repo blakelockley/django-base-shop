@@ -4,6 +4,7 @@ from django.conf import settings
 from .concrete.address import Address
 from .concrete.country import Country
 from .concrete.shipping_option import ShippingOption
+from .concrete.image import Image
 
 from .abstract.base_product import BaseProduct
 from .abstract.base_checkout_details import BaseCheckoutDetails
