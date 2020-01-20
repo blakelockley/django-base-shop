@@ -92,9 +92,9 @@ def test_cart_middleware():
     response = client.get("/check_cart")
     assert response.content == b"None"
 
-    # Ensure cart is now created through manual endpoint
-    response = client.get("/create_cart")
-    assert response.status_code == 204
+    # Add item to the cart
+    response = client.get("/add_cart_item/1")
+    assert response.status_code == 200
 
     # Get cart from db
     cart = ConcreteCart.objects.first()

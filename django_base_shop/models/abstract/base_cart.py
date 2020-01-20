@@ -12,9 +12,7 @@ class BaseCart(models.Model):
         indexes = (models.Index(fields=["cart_token"]),)
 
     # Used as a handle to retrieve the users cart from cookies or other
-    cart_token = models.CharField(
-        max_length=64, unique=True, editable=False, default=partial(token_hex, 32),
-    )
+    cart_token = models.CharField(max_length=64, unique=True, editable=False,)
 
     checkout_details = models.ForeignKey(
         settings.SHOP_CHECKOUT_DETAILS_MODEL,
@@ -24,10 +22,21 @@ class BaseCart(models.Model):
     )
 
     def __str__(self):
+        if not self.is_persisted:
+            return f"Cart (Unpersisted)"
+
         return f"Cart ({self.cart_token[:8]})"
 
     def __len__(self):
         return self.items.count()  # pylint: disable=no-member
+
+    @property
+    def is_persisted(self):
+        """
+        Flag indicating if the cart has been stored in the db.
+        """
+
+        return bool(self.cart_token)
 
     @property
     def empty(self):
@@ -40,10 +49,22 @@ class BaseCart(models.Model):
             total += item.product.price * item.quantity
         return total
 
+    def save(self, *args, **kwargs):
+
+        if not self.cart_token:
+            self.cart_token = token_hex(32)
+
+        super().save(*args, **kwargs)
+
     def add_item(self, product, quantity=1):
         """
         Add item to cart. A single quantity will be added unless specified otherwise.
         """
+
+        # Ensure we are using a persisted cart
+        self.save()
+        self.refresh_from_db()
+
         CartItem = apps.get_model(settings.SHOP_CART_ITEM_MODEL)
 
         item, created = CartItem.objects.get_or_create(
@@ -58,6 +79,11 @@ class BaseCart(models.Model):
         """
         Remove item from cart. If quantity is None, the full quantity of the given item will be removed.
         """
+
+        # Ensure we are using a persisted cart
+        self.save()
+        self.refresh_from_db()
+
         CartItem = apps.get_model(settings.SHOP_CART_ITEM_MODEL)
         item = CartItem.objects.get(cart=self, product=product)
 

@@ -21,6 +21,8 @@ from test_shop import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="index"),
-    path("create_cart", views.create_cart, name="create_cart"),
     path("check_cart", views.check_cart, name="check_cart"),
+    path("check_cart_items", views.check_cart_items, name="check_cart_items"),
+    path("add_cart_item/<int:pk>", views.add_cart_item, name="add_cart_item"),
+    path("remove_cart_item/<int:pk>", views.remove_cart_item, name="remove_cart_item",),
 ]

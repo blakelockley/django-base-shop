@@ -12,11 +12,18 @@ class CartMiddleware:
 
         # Request
         cart_token = request.COOKIES.get("cart_token")
+        request.cart = None
+
         if cart_token:
             request.cart = Cart.objects.filter(cart_token=cart_token).first()
-        else:
-            request.cart = None
+
+        if request.cart is None:
+            request.cart = Cart()
 
         # Response
         response = self.get_response(request)
+
+        if request.cart.is_persisted:
+            response.set_cookie("cart_token", request.cart.cart_token)
+
         return response
