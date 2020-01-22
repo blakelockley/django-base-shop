@@ -4,7 +4,7 @@ from .country import Country
 
 
 class Address(models.Model):
-    line = models.CharField(max_length=100)
+    street = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
     postcode = models.CharField(max_length=20)

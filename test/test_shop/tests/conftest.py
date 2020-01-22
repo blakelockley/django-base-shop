@@ -17,7 +17,7 @@ def australia():
 @pytest.fixture
 def shipping_address(australia):
     address = Address()
-    address.line = "123 Home Street"
+    address.street = "123 Home Street"
     address.city = "Sydney"
     address.state = "NSW"
     address.postcode = "2000"
@@ -30,7 +30,7 @@ def shipping_address(australia):
 @pytest.fixture
 def billing_address(australia):
     address = Address()
-    address.line = "456 Other Street"
+    address.street = "456 Other Street"
     address.city = "Melbourne"
     address.state = "VIC"
     address.postcode = "3000"
