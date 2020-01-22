@@ -35,7 +35,7 @@ def add_cart_item(request, pk):
         ConcreteProduct.objects.create(handle="ANV-001", name="Anvil", price=100.0)
 
     product = ConcreteProduct.objects.get(pk=pk)
-    cart.add_item(product, 1)
+    cart.add_item(product)
 
     return HttpResponse(b"Item added! <a href='/check_cart_items'>Check items</a>")
 

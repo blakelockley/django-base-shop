@@ -85,6 +85,17 @@ def test_cart_remove_item_multiple(cart, product):
     assert len(cart) == 0
 
 
+def test_cart_update_item(cart, product):
+    cart.add_item(product, quantity=10)
+    assert cart.items.first().quantity == 10
+
+    cart.update_item(product, quantity=7)
+    assert cart.items.first().quantity == 7
+
+    cart.update_item(product, quantity=0)
+    assert len(cart) == 0
+
+
 def test_cart_middleware():
     client = Client()
 
