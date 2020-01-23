@@ -25,7 +25,7 @@ def test_order_item_price_changed(product, cart, order):
 
     assert order_item.price_paid == original_price
 
-    # Chaning the price of the product should not affect the order item
+    # Changing the price of the product should not affect the order item
     product.price = 120.0
     product.save()
 

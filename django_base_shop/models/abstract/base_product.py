@@ -1,5 +1,6 @@
 from django.db import models
 from ..concrete.image import Image
+from ..concrete.shipping_tag import ShippingTag
 
 
 class BaseProduct(models.Model):
@@ -23,6 +24,7 @@ class BaseProduct(models.Model):
 
     # Pricing
     price = models.DecimalField(max_digits=7, decimal_places=2)
+    shipping_tag = models.ForeignKey(ShippingTag, on_delete=models.PROTECT)
 
     # Availablity
     available = models.BooleanField(default=True)

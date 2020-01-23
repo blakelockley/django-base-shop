@@ -1,6 +1,6 @@
 from decimal import Decimal
 import pytest
-from django_base_shop.models import ShippingOption, Country, Address
+from django_base_shop.models import Country, Address, ShippingOption, ShippingTag
 from test_shop.models import (
     ConcreteProduct,
     ConcreteCart,
@@ -12,6 +12,21 @@ from test_shop.models import (
 @pytest.fixture
 def australia():
     return Country.objects.create(name="Australia (Fixture)")
+
+
+@pytest.fixture
+def shipping_tag():
+    return ShippingTag.objects.create(name="Medium", category="Size", order=1)
+
+
+@pytest.fixture
+def basic_shipping_option(australia, shipping_tag):
+    return ShippingOption.objects.create(
+        name="Regular",
+        price=Decimal(10.0),
+        country=australia,
+        shipping_tag=shipping_tag,
+    )
 
 
 @pytest.fixture
@@ -41,29 +56,26 @@ def billing_address(australia):
 
 
 @pytest.fixture
-def basic_shipping_option(australia):
-    return ShippingOption.objects.create(price=Decimal(10.0), country=australia)
-
-
-@pytest.fixture
-def product():
+def product(shipping_tag):
     anvil_product = ConcreteProduct()
     anvil_product.handle = "ANV-001"
     anvil_product.name = "Anvil"
     anvil_product.description = "Great product!"
     anvil_product.price = Decimal(100.0)
+    anvil_product.shipping_tag = shipping_tag
     anvil_product.save()
 
     return anvil_product
 
 
 @pytest.fixture
-def extra_product():
+def extra_product(shipping_tag):
     tnt_product = ConcreteProduct()
     tnt_product.handle = "TNT-001"
     tnt_product.name = "TNT"
     tnt_product.description = "KABOOM!"
     tnt_product.price = Decimal(50.0)
+    tnt_product.shipping_tag = shipping_tag
     tnt_product.save()
 
     return tnt_product

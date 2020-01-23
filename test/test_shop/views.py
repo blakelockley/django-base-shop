@@ -1,4 +1,6 @@
 from django.http import HttpResponse
+from django_base_shop.models import ShippingTag
+
 from .models import ConcreteCart, ConcreteProduct
 
 
@@ -32,7 +34,14 @@ def add_cart_item(request, pk):
     cart = request.cart
 
     if ConcreteProduct.objects.count() == 0:
-        ConcreteProduct.objects.create(handle="ANV-001", name="Anvil", price=100.0)
+        ConcreteProduct.objects.create(
+            handle="ANV-001",
+            name="Anvil",
+            price=100.0,
+            shipping_tag=ShippingTag.objects.create(
+                name="Medium", category="Size", order=1
+            ),
+        )
 
     product = ConcreteProduct.objects.get(pk=pk)
     cart.add_item(product)

@@ -43,8 +43,34 @@ class Migration(migrations.Migration):
                     "handle",
                     models.CharField(db_index=True, max_length=200, unique=True),
                 ),
-                ("image", models.ImageField(upload_to="images/"),),
+                ("image", models.ImageField(upload_to="images/")),
             ],
+        ),
+        migrations.CreateModel(
+            name="ShippingTag",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=200)),
+                ("category", models.CharField(max_length=200)),
+                (
+                    "order",
+                    models.PositiveSmallIntegerField(
+                        default=0, help_text="Order of tag for the given category."
+                    ),
+                ),
+            ],
+            options={
+                "ordering": ["category", "order"],
+                "unique_together": {("category", "order")},
+            },
         ),
         migrations.CreateModel(
             name="ShippingOption",
@@ -58,12 +84,21 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
+                ("name", models.CharField(max_length=200)),
                 ("price", models.DecimalField(decimal_places=2, max_digits=5)),
                 (
                     "country",
                     models.ForeignKey(
+                        null=True,
                         on_delete=django.db.models.deletion.CASCADE,
                         to="django_base_shop.Country",
+                    ),
+                ),
+                (
+                    "shipping_tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="django_base_shop.ShippingTag",
                     ),
                 ),
             ],
