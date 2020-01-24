@@ -53,10 +53,10 @@ class Migration(migrations.Migration):
                 ("customer_phone", models.CharField(max_length=100)),
                 ("customer_coupon", models.CharField(blank=True, max_length=100)),
                 ("billing_address_same_as_shipping", models.BooleanField(default=True)),
-                ("_billing_name", models.CharField(blank=True, max_length=100)),
-                ("_billing_company", models.CharField(blank=True, max_length=100)),
+                ("billing_name", models.CharField(blank=True, max_length=100)),
+                ("billing_company", models.CharField(blank=True, max_length=100)),
                 (
-                    "_billing_address",
+                    "billing_address",
                     models.ForeignKey(
                         null=True,
                         on_delete=django.db.models.deletion.PROTECT,

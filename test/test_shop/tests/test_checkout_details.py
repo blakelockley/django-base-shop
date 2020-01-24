@@ -13,9 +13,6 @@ def test_checkout_details_billing_same_as_shipping(shipping_address):
     details.save()
 
     assert details.billing_address_same_as_shipping
-    assert details.billing_address == shipping_address
-    assert details.billing_name == "John Smith"
-    assert details.billing_company == "ACME Corporation"
 
 
 def test_checkout_details_billing_differ_to_shipping(shipping_address, billing_address):
