@@ -10,3 +10,7 @@ class Address(models.Model):
     postcode = models.CharField(max_length=20)
 
     country = models.ForeignKey(Country, on_delete=models.PROTECT)
+
+    @property
+    def formatted(self) -> str:
+        return f"{self.street}\n{self.city} {self.state} {self.postcode}\n{self.country.name}"
