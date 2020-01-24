@@ -49,6 +49,19 @@ class BaseCart(models.Model):
             total += item.product.price * item.quantity
         return total
 
+    @property
+    def total(self):
+        if (
+            self.checkout_details is None
+            or self.checkout_details.shipping_selection is None
+        ):
+            return None
+
+        total = self.subtotal
+        total += self.checkout_details.shipping_selection.price
+
+        return total
+
     def save(self, *args, **kwargs):
 
         if not self.cart_token:

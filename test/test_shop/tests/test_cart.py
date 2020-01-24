@@ -44,6 +44,21 @@ def test_cart_subtotal(cart, product, extra_product):
     assert cart.subtotal == 250.0  # Total 100 * 2 (product) + 50 (extra_product)
 
 
+def test_cart_total(cart, product, checkout_details):
+
+    # Add products
+    cart_item = ConcreteCartItem(cart=cart, product=product, quantity=1)
+    cart_item.save()
+
+    cart.checkout_details = checkout_details
+    cart.save()
+
+    assert cart.subtotal == 100.0
+    assert checkout_details.shipping_selection.price == 10.0
+
+    assert cart.total == 110.0
+
+
 def test_cart_add_item(cart, product, extra_product):
     cart.add_item(product)
     assert len(cart) == 1
