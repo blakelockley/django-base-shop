@@ -11,7 +11,7 @@ def test_order_item_create(product, cart, order):
 
     order_item = ConcreteOrderItem.objects.create_from_cart_item(cart_item, order=order)
 
-    assert order_item.price_paid == product.price
+    assert order_item.unit_price_paid == product.price
     assert order_item.quantity == cart_item.quantity
 
 
@@ -23,12 +23,12 @@ def test_order_item_price_changed(product, cart, order):
 
     order_item = ConcreteOrderItem.objects.create_from_cart_item(cart_item, order=order)
 
-    assert order_item.price_paid == original_price
+    assert order_item.unit_price_paid == original_price
 
     # Changing the price of the product should not affect the order item
     product.price = 120.0
     product.save()
 
-    assert order_item.price_paid != 120.0
-    assert order_item.price_paid == original_price
+    assert order_item.unit_price_paid != 120.0
+    assert order_item.unit_price_paid == original_price
 

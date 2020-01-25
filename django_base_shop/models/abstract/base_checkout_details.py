@@ -30,3 +30,9 @@ class BaseCheckoutDetails(models.Model):
     billing_address = models.ForeignKey(
         Address, null=True, related_name="+", on_delete=models.PROTECT
     )
+
+    def __str__(self):
+        if self.customer_name:
+            return f"CheckoutDetails ({self.customer_name})"
+
+        return super().__str__()

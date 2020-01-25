@@ -8,7 +8,7 @@ class OrderItemManager(models.Manager):
             order=order,
             product=item.product,
             quantity=item.quantity,
-            price_paid=item.product.price,
+            unit_price_paid=item.product.price,
         )
 
 
@@ -23,14 +23,12 @@ class BaseOrderItem(models.Model):
     )
     product = models.ForeignKey(settings.SHOP_PRODUCT_MODEL, on_delete=models.PROTECT)
 
+    unit_price_paid = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)
 
-    # Snapshot product price info
-    price_paid = models.DecimalField(max_digits=7, decimal_places=2)
-
     @property
-    def combined_price(self):
-        return self.price_paid * self.quantity
+    def total_price(self):
+        return self.unit_price_paid * self.quantity
 
     def clean(self, *args, **kwargs):
         super().clean()

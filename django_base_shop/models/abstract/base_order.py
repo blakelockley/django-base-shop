@@ -17,7 +17,6 @@ class OrderManager(models.Manager):
                 "Cart must contain a shipping option when creating an Order."
             )
 
-        # TODO: Atomic transaction and destory cart
         order = self.create(
             checkout_details=cart.checkout_details,
             shipping_paid=cart.checkout_details.shipping_selection.price,
@@ -45,7 +44,6 @@ class BaseOrder(models.Model):
         max_length=32, unique=True, editable=False, default=partial(token_hex, 16)
     )
 
-    # TODO: Make the values of the related object inmutable once set
     checkout_details = models.ForeignKey(
         settings.SHOP_CHECKOUT_DETAILS_MODEL, related_name="+", on_delete=models.PROTECT
     )
