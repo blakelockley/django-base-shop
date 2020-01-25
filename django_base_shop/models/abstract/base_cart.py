@@ -30,6 +30,11 @@ class BaseCart(models.Model):
     def __len__(self):
         return self.items.count()  # pylint: disable=no-member
 
+
+    def clear(self):
+        if self.is_persisted:
+            self.delete()
+
     @property
     def is_persisted(self):
         """

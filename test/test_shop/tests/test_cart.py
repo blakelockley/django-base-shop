@@ -111,6 +111,15 @@ def test_cart_update_item(cart, product):
     assert len(cart) == 0
 
 
+def test_cart_clear(cart, product):
+    cart.add_item(product, quantity=10)
+
+    assert cart.id is not None
+
+    cart.clear()
+    assert cart.id is None
+
+
 def test_cart_middleware():
     client = Client()
 
