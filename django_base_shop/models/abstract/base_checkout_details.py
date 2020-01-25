@@ -23,7 +23,7 @@ class BaseCheckoutDetails(models.Model):
         Address, related_name="+", on_delete=models.PROTECT
     )
 
-    billing_address_same_as_shipping = models.BooleanField(default=True)
+    billing_address_same_as_shipping = models.BooleanField(default=True, name="Billing same as shipping")
 
     billing_name = models.CharField(max_length=100, blank=True)
     billing_company = models.CharField(max_length=100, blank=True)
