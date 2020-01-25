@@ -28,7 +28,7 @@ class BaseCheckoutDetails(models.Model):
     billing_name = models.CharField(max_length=100, blank=True)
     billing_company = models.CharField(max_length=100, blank=True)
     billing_address = models.ForeignKey(
-        Address, null=True, related_name="+", on_delete=models.PROTECT
+        Address, null=True, blank=True, related_name="+", on_delete=models.PROTECT
     )
 
     def __str__(self):

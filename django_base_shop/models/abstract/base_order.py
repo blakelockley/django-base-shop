@@ -44,7 +44,7 @@ class BaseOrder(models.Model):
         max_length=32, unique=True, editable=False, default=partial(token_hex, 16)
     )
 
-    checkout_details = models.ForeignKey(
+    checkout_details = models.OneToOneField(
         settings.SHOP_CHECKOUT_DETAILS_MODEL, related_name="+", on_delete=models.PROTECT
     )
 

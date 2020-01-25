@@ -14,9 +14,10 @@ class BaseCart(models.Model):
     # Used as a handle to retrieve the users cart from cookies or other
     cart_token = models.CharField(max_length=64, unique=True, editable=False,)
 
-    checkout_details = models.ForeignKey(
+    checkout_details = models.OneToOneField(
         settings.SHOP_CHECKOUT_DETAILS_MODEL,
         null=True,
+        blank=True,
         related_name="+",
         on_delete=models.PROTECT,
     )
@@ -29,7 +30,6 @@ class BaseCart(models.Model):
 
     def __len__(self):
         return self.items.count()  # pylint: disable=no-member
-
 
     def clear(self):
         if self.is_persisted:
