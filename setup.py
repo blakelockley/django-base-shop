@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="django-base-shop",
-    version="0.0.20",
+    version="0.0.21",
     author="Blake Lockley",
     author_email="bwlockley@gmail.com",
     description="A basic, extendable data model for ecommerce shops using Django",

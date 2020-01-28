@@ -38,3 +38,20 @@ class BaseCheckoutDetails(models.Model):
             return f"CheckoutDetails ({self.customer_name})"
 
         return super().__str__()
+
+    @property
+    def has_billing(self):
+        """
+        CheckoutDetails contains unique billing information.
+        """
+
+        return not self.billing_address_same_as_shipping
+
+    @has_billing.setter
+    def has_billing(self, flag):
+        """
+        Specify that the CheckoutDetails contains unique billing information.
+        Note, the model instance is still required to be saved after setting this property.
+        """
+
+        self.billing_address_same_as_shipping = not flag
