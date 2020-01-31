@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from decimal import Decimal
 from functools import partial
 from secrets import token_hex
@@ -39,7 +41,7 @@ class BaseOrder(models.Model):
     objects = OrderManager()
 
     # Meta info
-    date_placed = models.DateTimeField(auto_now_add=True)
+    date_placed = models.DateTimeField(default=datetime.now, editable=True)
     order_token = models.CharField(
         max_length=32, unique=True, editable=False, default=partial(token_hex, 16)
     )
