@@ -17,6 +17,7 @@ class BaseProduct(models.Model):
 
     # Descriptive info
     name = models.CharField(max_length=200)
+    tags = models.CharField(max_length=200, blank=True)
     description = models.TextField()
 
     # Product images
