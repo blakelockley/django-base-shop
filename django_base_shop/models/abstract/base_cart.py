@@ -74,7 +74,7 @@ class BaseCart(models.Model):
 
         super().save(*args, **kwargs)
 
-    def add_item(self, product, *, quantity=1):
+    def add_item(self, product, *, quantity=1, **kwargs):
         """
         Add item to cart. A single quantity will be added unless specified otherwise.
         """
@@ -93,7 +93,7 @@ class BaseCart(models.Model):
             item.quantity += quantity
             item.save()
 
-    def remove_item(self, product, *, quantity=None):
+    def remove_item(self, product, *, quantity=None, **kwargs):
         """
         Remove item from cart. If quantity is None, the full quantity of the given item will be removed.
         """
@@ -112,7 +112,7 @@ class BaseCart(models.Model):
             item.quantity -= quantity
             item.save()
 
-    def update_item(self, product, *, quantity):
+    def update_item(self, product, *, quantity, **kwargs):
         """
         Update item in cart to a specific quantity. A quantity of 0 will remove the item.
         """
