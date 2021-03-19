@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/blakelockley/django-base-shop",
     packages=setuptools.find_packages(exclude=["test"]),
-    install_requires=["django >= 2.1", "pillow == 7.0.0"],
+    install_requires=["django >= 2.1", "pillow == 8.1.1"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
